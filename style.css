@@ -210,8 +210,6 @@ progress::-moz-progress-bar {
   border-radius: 5px;
 }
 
-
-
 /* Add this to your CSS file to style the playing overlay */
 .playing-overlay {
   position: absolute;
@@ -233,4 +231,43 @@ progress::-moz-progress-bar {
 .card {
   position: relative; /* Make sure overlay is positioned over the card */
   /* other card styles */
+}
+
+/* music play pop up  */
+
+/* Popup styles */
+.popup {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 400px;
+  background: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 20px;
+  display: none; /* Initially hidden */
+  z-index: 1000;
+}
+
+/* Dim the background */
+.dim-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  z-index: 999;
+  display: none; /* Initially hidden */
+}
+
+
+#popup-artist-name {
+  color: black;
+  font-weight: 300;
+}
+#popup-song-name {
+  color: black;
 }

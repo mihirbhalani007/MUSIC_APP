@@ -45,9 +45,30 @@
         <div id="title">New releases</div>
         <div id="card_holder"></div>
       </div>
+      
+      <!-- <div class="controls">
+        <i class="fa-solid fa-backward-step fa-2x" style="color: #74c0fc"></i>
+        <i class="fa-solid fa-play fa-2x" style="color: #74c0fc"></i>
+        <i class="fa-solid fa-forward-step fa-2x" style="color: #74c0fc"></i>
+      </div> -->
+    </div>
+
+    <!-- popup when music plays -->
+
+    <div class="dim-background"></div>
+    <div class="popup">
+      <img
+        src=""
+        alt="Song Cover"
+        id="popup-cover"
+        style="width: 100%; border-radius: 10px"
+      />
+      <h3 id="popup-song-name">Song Name</h3>
+      <p id="popup-artist-name">Artist Name</p>
       <div class="progress-container">
-        <progress id="progress-bar" value="50" max="100"></progress>
-      </div>
+      <progress id="popup-progress" value="0" min="0" max="100"></progress>
+
+    </div>
       <div class="controls">
         <i class="fa-solid fa-backward-step fa-2x" style="color: #74c0fc"></i>
         <i class="fa-solid fa-play fa-2x" style="color: #74c0fc"></i>

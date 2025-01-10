@@ -86,14 +86,25 @@ const songData = [
     track: "./ASSETS/summer-memories-270159.mp3",
   },
 ];
+
 const audio = new Audio();
 let currentTrackIndex = null; // Corrected the spelling here
 const progress = document.querySelector("progress");
 const nextButton = document.querySelector(".fa-forward-step");
 const prevButton = document.querySelector(".fa-backward-step");
+const popupProgress = document.getElementById("popup-progress");
+
+// Elements inside the popup
+const popupCover = document.getElementById("popup-cover");
+const popupSongName = document.getElementById("popup-song-name");
+const popupArtistName = document.getElementById("popup-artist-name");
+const playingOverlay = document.getElementById("playing-overlay");
+const cardContainer = document.getElementById("card_holder");
+const playButton = document.querySelector(".controls i.fa-play");
+const popup = document.querySelector(".popup");
+const dimBackground = document.querySelector(".dim-background");
 
 // for intro screen
-
 document.addEventListener("DOMContentLoaded", () => {
   const splashScreen = document.getElementById("splash-screen");
   const appInterface = document.getElementById("app-interface");
@@ -105,14 +116,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // card display from songData
-
-const cardContainer = document.getElementById("card_holder");
-
 songData.forEach(({ image, songName, artistName }, index) => {
   // Added index
   const card = document.createElement("div");
   card.classList.add("card");
-
   const img = document.createElement("img");
   img.id = "cover_image";
   img.src = image;
@@ -145,19 +152,32 @@ songData.forEach(({ image, songName, artistName }, index) => {
 
   card.appendChild(img);
   card.appendChild(songTitle);
-
   card.appendChild(artist);
-
   cardContainer.appendChild(card);
 });
 
-const playButton = document.querySelector(".controls i.fa-play");
+// Show popup function
+function showPopup(index) {
+  // Update popup details
+  popupCover.src = songData[index].image;
+  popupSongName.textContent = songData[index].songName;
+  popupArtistName.textContent = songData[index].artistName;
+
+  // Show the popup and dim background
+  popup.style.display = "block";
+  dimBackground.style.display = "block";
+}
+
+// Hide popup function (optional, e.g., when clicking outside the popup)
+dimBackground.addEventListener("click", () => {
+  popup.style.display = "none";
+  dimBackground.style.display = "none";
+});
 
 // play track
 function playMusic(index) {
   const card = document.querySelectorAll(".card")[index];
   const img = card.querySelector("img");
-
   if (currentTrackIndex !== index) {
     audio.src = songData[index].track;
     audio.play();
@@ -167,6 +187,9 @@ function playMusic(index) {
       image.style.opacity = "1";
     });
     img.style.opacity = "0.2";
+
+    // Show popup
+    showPopup(index);
   } else {
     if (audio.paused) {
       audio.play();
@@ -192,10 +215,9 @@ playButton.addEventListener("click", () => {
 });
 
 // progress bar update as song plays
-
 audio.ontimeupdate = function () {
-  if (!audio.duration) return;
-  progress.value = (audio.currentTime / audio.duration) * 100;
+  if (!audio.duration || audio.duration === Infinity) return;
+  popupProgress.value = (audio.currentTime / audio.duration) * 100;
 };
 
 // Handle next and previous buttons
@@ -210,3 +232,12 @@ prevButton.addEventListener("click", () => {
     currentTrackIndex - 1 >= 0 ? currentTrackIndex - 1 : songData.length - 1;
   playMusic(prevIndex);
 });
+
+if (popupProgress) {
+  popupProgress.addEventListener("input", function () {
+    if (audio.duration && audio.duration !== Infinity) {
+      const progressTime = (popupProgress.value / 100) * audio.duration;
+      audio.currentTime = progressTime;
+    }
+  });
+}
