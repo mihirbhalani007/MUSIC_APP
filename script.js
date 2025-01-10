@@ -88,7 +88,7 @@ const songData = [
 ];
 
 const audio = new Audio();
-let currentTrackIndex = null; // Corrected the spelling here
+let currentTrackIndex = null;
 const progress = document.querySelector("progress");
 const nextButton = document.querySelector(".fa-forward-step");
 const prevButton = document.querySelector(".fa-backward-step");
@@ -143,11 +143,11 @@ songData.forEach(({ image, songName, artistName }, index) => {
       : `By ${artistName}`;
 
   card.addEventListener("click", () => {
-    playMusic(index); // Pass index here
+    playMusic(index);
   });
 
   card.addEventListener("click", () => {
-    playMusic(index, card, playingOverlay); // Pass card and overlay to playMusic
+    playMusic(index, card, playingOverlay);
   });
 
   card.appendChild(img);
@@ -168,7 +168,7 @@ function showPopup(index) {
   dimBackground.style.display = "block";
 }
 
-// Hide popup function (optional, e.g., when clicking outside the popup)
+// Hide popup function
 dimBackground.addEventListener("click", () => {
   popup.style.display = "none";
   dimBackground.style.display = "none";
@@ -203,7 +203,7 @@ function playMusic(index) {
   }
 }
 
-// event listener for play/pause toggle
+// event listener for play and pause toggle
 playButton.addEventListener("click", () => {
   if (audio.paused) {
     audio.play();
@@ -214,7 +214,7 @@ playButton.addEventListener("click", () => {
   }
 });
 
-// progress bar update as song plays
+// progress bar update when song plays
 audio.ontimeupdate = function () {
   if (!audio.duration || audio.duration === Infinity) return;
   popupProgress.value = (audio.currentTime / audio.duration) * 100;
