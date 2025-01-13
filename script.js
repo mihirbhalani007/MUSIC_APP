@@ -89,7 +89,6 @@ const songData = [
 
 const audio = new Audio();
 let currentTrackIndex = null;
-const progress = document.querySelector("progress");
 const nextButton = document.querySelector(".fa-forward-step");
 const prevButton = document.querySelector(".fa-backward-step");
 const popupProgress = document.getElementById("popup-progress");
@@ -117,7 +116,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // card display from songData
 songData.forEach(({ image, songName, artistName }, index) => {
-  // Added index
   const card = document.createElement("div");
   card.classList.add("card");
   const img = document.createElement("img");
@@ -146,10 +144,6 @@ songData.forEach(({ image, songName, artistName }, index) => {
     playMusic(index);
   });
 
-  card.addEventListener("click", () => {
-    playMusic(index, card, playingOverlay);
-  });
-
   card.appendChild(img);
   card.appendChild(songTitle);
   card.appendChild(artist);
@@ -158,12 +152,11 @@ songData.forEach(({ image, songName, artistName }, index) => {
 
 // Show popup function
 function showPopup(index) {
-  // Update popup details
   popupCover.src = songData[index].image;
   popupSongName.textContent = songData[index].songName;
   popupArtistName.textContent = songData[index].artistName;
 
-  // Show the popup and dim background
+  // Show the popup and blur bg
   popup.style.display = "block";
   dimBackground.style.display = "block";
 }
@@ -190,16 +183,6 @@ function playMusic(index) {
 
     // Show popup
     showPopup(index);
-  } else {
-    if (audio.paused) {
-      audio.play();
-      playButton.classList.replace("fa-play", "fa-pause");
-      img.style.opacity = "0.2";
-    } else {
-      audio.pause();
-      playButton.classList.replace("fa-pause", "fa-play");
-      img.style.opacity = "1";
-    }
   }
 }
 
